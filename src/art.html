@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css" integrity="sha384-/frq1SRXYH/bSyou/HUp/hib7RVN1TawQYja658FEOodR/FQBKVqT9Ol+Oz3Olq5" crossorigin="anonymous"/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"rel="stylesheet"/>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css"rel="stylesheet"/>
+	-->
+	<title>Art</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        .questions {
+            display: none;
+			
+        }
+        #question1 {
+            display: block;
+        }
+
+        body{
+            margin:20px;
+        }
+		#oldAns{
+			color:white;
+			background-color: rgb(25, 68, 70);
+			padding:10px;
+		}
+		.btn{
+			color:white;
+			background-color:  rgb(25, 68, 70);;
+		}
+		
+    </style>
+</head>
+<body class="container">
+	
+	<form>
+		<p id="oldAns"></p>
+		<div class="form-check"  id="demo">
+		<div a href="index.html"> Back to Quiz</a></div>
+		<h1></h1>
+		</div>
+		<button type="button" id="tprev" class="btn btn-rounded"  onclick="prev();" >Previous</button>
+		<button type="button" class="btn btn-rounded" id="tnext" style="visibility:visible;" onclick="next()">Next</button>
+		<button type="button" class="btn btn-rounded" id="show"  style="visibility:hidden;" onclick="send()">Submit</button>
+	    <br>
+		<p id="testEnd"></p>
+	</form>
+	
+
+	<script type="text/javascript">
+		let text = "";
+		let questionNumber= 0;
+		let currentQuestion = 1;
+
+	let questions = [
+    {
+      "id": 11,
+      "question": "Which artist is known for coining the term 'Surrealism'?",
+      "choices": ["Pablo Picasso", "Salvador Dali", "Vincent van Gogh", "Henri Matisse"],
+      "Answer": "Salvador Dali",
+      "category": "modern-art"
+    },
+    {
+      "id": 12,
+      "question": "Which movement is associated with the use of abstract forms and shapes in art?",
+      "choices": ["Impressionism", "Expressionism", "Futurism", "Cubism"],
+      "Answer": "Cubism",
+      "category": "modern-art"
+    },
+    {
+      "id": 13,
+      "question": "Which artist is known for painting the work 'The Persistence of Memory'?",
+      "choices": ["Pablo Picasso", "Salvador Dali", "Vincent van Gogh", "Henri Matisse"],
+      "Answer": "Salvador Dali",
+      "category": "modern-art"
+    },
+    {
+      "id": 14,
+      "question": "Which artist is known for creating the painting 'The Scream'?",
+      "choices": ["Vincent van Gogh", "Salvador Dali", "Edvard Munch", "Claude Monet"],
+      "Answer": "Edvard Munch",
+      "category": "modern-art"
+    },
+    {
+      "id": 15,
+      "question": "What movement was associated with the use of bold, bright colors and thick brushstrokes?",
+      "choices": ["Impressionism", "Expressionism", "Fauvism", "Cubism"],
+      "Answer": "Fauvism",
+      "category": "modern-art"
+    },
+    {
+      "id": 16,
+      "question": "What movement was associated with the use of bright colors, simplified forms, and a focus on movement and speed",
+      "choices": ["Impressionism", "Futurism", "Surrealism", "Abstract Expressionism"],
+      "Answer": "Futurism",
+      "category": "modern-art"
+    },
+    {
+      "id": 17,
+      "question": "Which artist is known for creating the painting 'Water Lilies'?",
+      "choices": ["Claude Monet", "Paul Cezanne", "Paul Gauguin", "Paul Klee"],
+      "Answer": "Claude Monet",
+      "category": "modern-art"
+    },
+    {
+      "id": 18,
+      "question": "Which artist is known for creating the painting 'Les Demoiselles d'Avignon'?",
+      "choices": ["Henri Matisse", "Vincent van Gogh", "Salvador Dali", "Pablo Picasso"],
+      "Answer": "Pablo Picasso",
+      "category": "modern-art"
+    },
+    {
+      "id": 19,
+      "question": "Which artist is known for creating the painting 'Guernica'?",
+      "choices": ["Claude Mone", "Paul Cezanne", "Pablo Picasso", "Vincent van Gogh"],
+      "Answer": "Pablo Picasso",
+      "category": "modern-art"
+    },
+    {
+      "id": 20,
+      "question": "Which artist is known for creating the sculpture 'The Thinker'?",
+      "choices": ["Auguste Rodin", "Alexander Calder", "Jean Arp", "Henry Moore"],
+      "Answer": "Auguste Rodin",
+      "category": "modern-art"
+    }
+  ];
+		
+		questions.forEach(myFunction);
+	
+		document.getElementById("demo").innerHTML = text;
+		
+		function myFunction(item, index) {
+			text += `<div class="questions" id="question${index+1}">${index+1}: ${item.question} <br>`;
+			let choices_html = '';
+			item.choices.forEach((ch, i) => {
+			    choices_html += '<input type="radio" class="radioclass" id="tnext_'+(index+1)+'_'+(i+1)+'" name="fav_language'+(index+1)+'" value="'+ch+'"> <label for="tnext">'+ch+'</label><br>'
+				
+			});
+			text += `${choices_html}</div>`;
+		}
+
+		function next() {
+			console.log('currentQuestion...................'+currentQuestion)
+		 	if(currentQuestion < 10) {
+		 		hidediv();
+				document.getElementById(`question${currentQuestion+1}`).style.display = 'block';
+				currentQuestion = currentQuestion+1;
+
+				var ans = document.querySelector('input[type=radio]:checked').value;
+				console.log(ans);
+            	//document.getElementById("testEnd").innerHTML = 'Your Ans: '+ans;
+				
+				if(currentQuestion == 10) {
+				//hidediv();
+					document.getElementById("show").style.visibility= 'visible';
+					document.getElementById('tnext').style.visibility = 'hidden';
+					document.getElementById('tprev').style.visibility = 'visible';
+				}
+		 	}	
+		}
+
+		function prev() {
+		 	if(currentQuestion > 1 && currentQuestion <= 10) {
+		 			hidediv();
+				 	document.getElementById(`question${currentQuestion-1}`).style.display = 'block';
+				 	currentQuestion = currentQuestion-1;
+			}	
+			else if(currentQuestion <= 1){
+					document.getElementById("tprev").disabled= 'true';	
+			}
+		 }
+
+		 function hidediv() {
+		 	for (var i = 0; i < document.getElementsByClassName("questions").length; i++) {
+			    document.getElementsByClassName("questions")[i].style.display = 'none';	
+			}
+		 }
+		 
+
+		 function send(){
+			console.log('inside...............................');
+			hidediv();
+			window.alert("Thanks for the Test!");
+
+			document.getElementById("oldAns").innerHTML='Quiz Correct Question and Answers';
+
+			for (var i = 0; i < document.getElementsByClassName("questions").length; i++) {
+				
+				document.getElementById('tprev').style.visibility = 'hidden';
+				document.getElementById('show').style.visibility = 'hidden';
+				document.getElementById('tnext').style.visibility = 'hidden';
+			    
+				document.getElementsByClassName("questions")[i].style.display = 'block';	
+				
+				let questionContainer = document.getElementsByClassName("questions")[i];
+				console.log(questions[i].Answer,'#question'+(i+1)+ ' input:nth-child('+questions[i].Answer+')');
+				
+				$('#tnext_'+(i+1)+'_'+questions[i].Answer).attr('checked', true);
+				
+				// if(this.value != questions[i].Answer) {
+				// 	alert('Incorrect');
+				// } else {
+				// 	alert('Correct');
+				// }
+			} 		
+		}	
+		
+
+
+	
+    
+	</script>
+</body>
+</html>

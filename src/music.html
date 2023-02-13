@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css" integrity="sha384-/frq1SRXYH/bSyou/HUp/hib7RVN1TawQYja658FEOodR/FQBKVqT9Ol+Oz3Olq5" crossorigin="anonymous"/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"rel="stylesheet"/>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css"rel="stylesheet"/>
+	-->
+	
+	<title>Music</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	
+    <style>
+        .questions {
+            display: none;
+			
+        }
+        #question1 {
+            display: block;
+        }
+
+        body{
+            margin:20px;
+        }
+		#oldAns{
+			color:white;
+			background-color: rgb(25, 68, 70);
+			padding:10px;
+		}
+		.btn{
+			color:white;
+			background-color:  rgb(25, 68, 70);;
+		}
+		
+    </style>
+</head>
+<body class="container">
+	
+	<form>
+		<p id="oldAns"></p>
+		<p ><a href="index.html" id="back_quiz"></a></p>
+		<div class="form-check"  id="demo">
+		
+		
+		<h1></h1>
+		</div>
+		
+		<button type="button" id="tprev" class="btn btn-rounded"  onclick="prev();" >Previous</button>
+		<button type="button" class="btn btn-rounded" id="tnext" style="visibility:visible;" onclick="next()">Next</button>
+		<button type="button" class="btn btn-rounded" id="show"  style="visibility:hidden;" onclick="send()">Submit</button>
+	    <br>
+		<p id="testEnd"></p>
+	</form>
+	
+
+	<script type="text/javascript">
+		let text = "";
+		let questionNumber= 0;
+		let currentQuestion = 1;
+
+	let questions = [
+    {
+      "id": 1,
+      "question": "Which of the following is not a type of music notation?",
+      "choices": ["Standard notation", "Tab notation", "Morse code notation", "Graphics notation"],
+      "Answer": "Morse code notation",
+      "category": "music"
+    },
+    {
+      "id": 2,
+      "question": "What is the most common time signature in classical music?",
+      "choices": ["3/4", "4/4", "5/4", "6/8"],
+      "Answer": "4/4",
+      "category": "music"
+    },
+    {
+      "id": 3,
+      "question": "Which of the following is not a type of instrument in a symphony orchestra?",
+      "choices": ["Violin", "Piano", "Harp", "Theremin"],
+      "Answer": "Theremin",
+      "category": "music"
+    },
+    {
+      "id": 4,
+      "question": "What is the most common key in pop music?",
+      "choices": ["C Major", "G Major", "D Major", "A Major"],
+      "Answer": "C Major",
+      "category": "music"
+    },
+    {
+      "id": 5,
+      "question": "Which of the following is not a type of chord?",
+      "choices": ["Major", "Minor", "Diminished", "Flat"],
+      "Answer": "Flat",
+      "category": "music"
+    },
+    {
+      "id": 6,
+      "question": "Which of the following is not a type of music genre?",
+      "choices": ["Jazz", "Blues", "Rock", "Applesauce"],
+      "answer": "Applesauce",
+      "category": "music"
+    },
+    {
+      "id": 7,
+      "question": "Which of the following is not a type of music theory?",
+      "choices": ["Harmony", "Counterpoint", "Form", "Cooking"],
+      "Answer": "Cooking",
+      "category": "music"
+    },
+    {
+      "id": 8,
+      "question": "What is the most common tempo marking in classical music?",
+      "choices": ["Allegro", "Andante", "Adagio", "Moderato"],
+      "Answer": "Allegro",
+      "category": "music"
+    },
+    {
+      "id": 9,
+      "question": "Which of the following is not a type of musical form?",
+      "choices": ["Sonata", "Symphony", "Concerto", "Spaghetti"],
+      "Answer": "Spaghetti",
+      "category": "music"
+    },
+    {
+      "id": 10,
+      "question": "Which of the following is not a type of music notation software?",
+      "choices": ["Sibelius", "Finale", "MuseScore", "Microsoft Word"],
+      "Answer": "Microsoft Word",
+      "category": "music"
+    }
+  ];
+		
+		questions.forEach(myFunction);
+	
+		document.getElementById("demo").innerHTML = text;
+		
+		function myFunction(item, index) {
+			text += `<div class="questions" id="question${index+1}">${index+1}: ${item.question} <br>`;
+			let choices_html = '';
+			item.choices.forEach((ch, i) => {
+			    choices_html += '<input type="radio" class="radioclass" id="tnext_'+(index+1)+'_'+(i+1)+'" name="fav_language'+(index+1)+'" value="'+ch+'"> <label for="tnext">'+ch+'</label><br>'
+				
+			});
+			text += `${choices_html}</div>`;
+		}
+
+		function next() {
+			console.log('currentQuestion...................'+currentQuestion)
+		 	if(currentQuestion < 10) {
+		 		hidediv();
+				document.getElementById(`question${currentQuestion+1}`).style.display = 'block';
+				currentQuestion = currentQuestion+1;
+
+				var ans = document.querySelector('input[type=radio]:checked').value;
+				console.log(ans);
+            	//document.getElementById("testEnd").innerHTML = 'Your Ans: '+ans;
+				
+				if(currentQuestion == 10) {
+				//hidediv();
+					document.getElementById("show").style.visibility= 'visible';
+					document.getElementById('tnext').style.visibility = 'hidden';
+					document.getElementById('tprev').style.visibility = 'visible';
+				}
+		 	}	
+		}
+
+		function prev() {
+		 	if(currentQuestion > 1 && currentQuestion <= 10) {
+		 			hidediv();
+				 	document.getElementById(`question${currentQuestion-1}`).style.display = 'block';
+				 	currentQuestion = currentQuestion-1;
+			}	
+			else if(currentQuestion <= 1){
+					document.getElementById("tprev").disabled= 'true';	
+			}
+		 }
+
+		 function hidediv() {
+		 	for (var i = 0; i < document.getElementsByClassName("questions").length; i++) {
+			    document.getElementsByClassName("questions")[i].style.display = 'none';	
+			}
+		 }
+		 
+
+		 function send(){
+			console.log('inside...............................');
+			hidediv();
+			window.alert("Thanks for the Test!");
+			
+			document.getElementById("back_quiz").style.visibility = 'visible';
+			document.getElementById("oldAns").innerHTML='Quiz Correct Question and Answers';
+
+			for (var i = 0; i < document.getElementsByClassName("questions").length; i++) {
+				
+				document.getElementById('tprev').style.visibility = 'hidden';
+				document.getElementById('show').style.visibility = 'hidden';
+				document.getElementById('tnext').style.visibility = 'hidden';
+			    
+				document.getElementsByClassName("questions")[i].style.display = 'block';	
+				
+				let questionContainer = document.getElementsByClassName("questions")[i];
+				console.log(questions[i].Answer,'#question'+(i+1)+ ' input:nth-child('+questions[i].Answer+')');
+				
+				$('#tnext_'+(i+1)+'_'+questions[i].Answer).attr('checked', true);
+				
+				// if(this.value != questions[i].Answer) {
+				// 	alert('Incorrect');
+				// } else {
+				// 	alert('Correct');
+				// }
+			} 	
+			
+			
+		}	
+		
+
+
+	
+    
+	</script>
+</body>
+</html>
